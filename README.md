@@ -4,7 +4,7 @@ Tool to dump all Isabelle info. Result should look something like this:
 ```json
 ​{
   "env": {
-      NAME: "value",
+      "NAME": "value",
    },
   "sessions": [{
       "name": "...",
@@ -13,10 +13,10 @@ Tool to dump all Isabelle info. Result should look something like this:
       "session_imports": "...",
       "thys": [
           { "name": "HOL.Groups",
-            "dir": "/home/...bla/Groups.thy".
+            "dir": "/home/...bla/Groups.thy",
             "symbolic_dir": "$SOMETHINGELSE/thy/Groups.thy"
           }
       ]
-  }],
+  }]
 }
 ```
