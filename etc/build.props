@@ -1,0 +1,8 @@
+title = Dump Config
+module = $DUMP_CONFIG_HOME/lib/handle.jar
+requirements = \
+  env:ISABELLE_SCALA_JAR
+sources = \
+  dump_config.scala
+services = \
+  isabelle.Dump_Config_Tools
