@@ -19,3 +19,10 @@ Tool to dump all Isabelle info. Result should look something like this:
   }]
 }
 ```
+
+## Installation
+Simply add the component to Isabelle:
+```isabelle components -u <THIS_REPO_DIR>```
+
+## Usage
+Run `isabelle dump_config -?` to see usage instructions.
