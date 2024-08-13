@@ -1,8 +1,8 @@
 # Isabelle Dump Config
-Tool to dump all Isabelle info.
+Tool to dump all Isabelle info. Result should look something like this:
 
-´´´
-​{
+```json
+{
   env: {
       NAME: "value",
    },
@@ -19,4 +19,4 @@ Tool to dump all Isabelle info.
       ]
   }],
 }
-´´´
+```
