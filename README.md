@@ -2,19 +2,19 @@
 Tool to dump all Isabelle info. Result should look something like this:
 
 ```json
-{
-  env: {
+​{
+  "env": {
       NAME: "value",
    },
-  sessions: [{
-      name: "...",
-      db_file: "...",
-      base_session: "...",
-      session_imports: "...",
-      thys: [
-          { name: "HOL.Groups",
-            dir: "/home/...bla/Groups.thy".
-            symbolic_dir: "$SOMETHINGELSE/thy/Groups.thy"
+  "sessions": [{
+      "name": "...",
+      "db_file": "...",
+      "base_session": "...",
+      "session_imports": "...",
+      "thys": [
+          { "name": "HOL.Groups",
+            "dir": "/home/...bla/Groups.thy".
+            "symbolic_dir": "$SOMETHINGELSE/thy/Groups.thy"
           }
       ]
   }],
