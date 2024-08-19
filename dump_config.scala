@@ -25,32 +25,29 @@ object Dump_Config {
   ): Unit = {
     val store = Store(options)
 
-    val structure =
+    val full_structure =
       Sessions.load_structure(options, dirs = AFP.main_dirs(afp_root) ::: dirs,
         select_dirs = select_dirs)
-    val deps = Sessions.deps(structure.selection(selection), progress = progress).check_errors
-    val full_sessions_selection = structure.imports_selection(selection)
+    val structure = full_structure.selection(selection)
+    val deps = Sessions.deps(structure, progress = progress).check_errors
 
     val sessions =
-      full_sessions_selection.map { session_name =>
+      structure.build_topological_order.map { session_name =>
+        progress.echo("Processing " + session_name + " ...")
         val session = store.get_session(session_name)
+
         JSON.Object(
           "name" -> session_name,
-          "heap" -> session.heap.map(_.canonical.implode).getOrElse(""),
-          "log_db" -> session.log_db.map(_.canonical.implode).getOrElse(""),
-          "base_sessions" -> structure.build_graph.imm_preds(session_name).toList,
-          "session_imports" -> structure.imports_graph.imm_preds(session_name).toList,
+          "heap_file" -> session.heap.map(_.canonical.implode).getOrElse(""),
+          "log_db_file" -> session.log_db.map(_.canonical.implode).getOrElse(""),
+          "base_sessions" -> full_structure.build_graph.imm_preds(session_name).toList,
+          "session_imports" -> full_structure.imports_graph.imm_preds(session_name).toList,
           "thys" -> deps(session_name).known_theories.view.mapValues(entry => JSON.Object(
-            "name" -> entry.name.theory,
             "dir" -> entry.name.path.canonical.implode,
-            "symbolic_dir" -> entry.name.path.implode_short
-          )).toMap
-        )
+          )).toMap)
       }
 
-    val settings = Environment.settings().asScala.toMap
-
-    val json = JSON.Object("env" -> settings, "sessions" -> sessions)
+    val json = JSON.Object("sessions" -> sessions)
 
     File.write(output_dir + Path.basic("dump_config").json, JSON.Format(json))
   }
